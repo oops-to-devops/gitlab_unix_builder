@@ -1,5 +1,5 @@
 ---
-- hosts: oops_box
+- hosts: gitlab_unix_builder
   gather_facts: False
 
   vars:
@@ -36,8 +36,20 @@
       when: common_pretasks_exists.stat.exists == true
       tags: always
 
-#  roles:
-# Uncomment if host is not yet configured for automatic updates
+  roles:
+    - {
+        role: sa_ruby,
+        ruby_install_version: 0.6.1,
+        ruby_install_setsystem: true,
+        ruby_version: 2.4.4,
+        option_install_sampleapp: false,
+        option_install_nginx_passenger: false,
+        option_ruby_install_setsystem: true
+      }
+    - {
+        role: sa_go,
+        go_version: 1.11.5
+      }
 
   tasks:
 

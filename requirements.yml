@@ -1,2 +1,6 @@
 - src: softasap.sa-include
   name: sa_include
+- src: softasap.sa-ruby
+  name: sa_ruby
+- src: softasap.sa-go
+  name: sa_go

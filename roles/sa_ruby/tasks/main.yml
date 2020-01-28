@@ -1,0 +1,34 @@
+---
+# tasks file for sa-ruby
+  - debug: msg="Tasks section"
+
+  - name: Playbook | package dependencies + cache update
+    apt: pkg={{ item }} state=present force="yes"  update_cache="yes"
+    with_items: "{{needed_packages}}"
+    become: yes
+    tags:
+      - travis_1
+
+  - include_tasks: 'ch_ruby.yml'
+    tags:
+      - travis_2
+
+
+  - include_tasks: 'ruby_install.yml'
+    tags:
+      - travis_2
+
+
+  - include_tasks: 'ruby.yml'
+    tags:
+      - travis_3
+
+
+  - include_tasks: 'nginx_passenger.yml'
+    when: option_install_nginx_passenger
+    tags:
+      - travis_4
+
+
+  - include_tasks: 'ruby_app_stub.yml'
+    when: option_install_sampleapp
